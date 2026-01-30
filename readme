@@ -6,45 +6,35 @@ O foco não é interface gráfica ou experiência do usuário, mas sim **comunic
 
 ---
 
-## 🎯 Objetivo
+## Objetivo
 
 Demonstrar:
 
-* Comunicação via **TCP puro**
-* Comunicação via **UDP puro**
+* Comunicação via **TCP **
+* Comunicação via **UDP **
 * Comunicação via **gRPC** entre **duas linguagens diferentes**
-* Execução conjunta dos serviços em um único projeto
-* Possibilidade de teste e demonstração presencial
 
 ---
 
-## 🧪 Estudo de Caso
+##  Estudo de Caso
 
 Sistema simples de comunicação entre usuários, explorando diferentes modelos de transmissão de dados:
 
 * **TCP**: envio confiável de mensagens
 * **UDP**: envio de mensagens sem garantia de entrega
-* **gRPC**: gerenciamento de usuários (login e listagem) com comunicação estruturada
+* **gRPC**: gerenciamento de usuários e mensagens via chamadas remotas
 
-O estudo se enquadra nos exemplos sugeridos pelo enunciado, como:
 
-* transmissão de dados
-* sistemas simples de gerenciamento de contas
-
----
-
-## 🧠 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 * **Node.js** – servidores TCP e UDP
 * **Python** – servidor gRPC
 * **gRPC + Protocol Buffers** – comunicação estruturada
 * **concurrently** – orquestração dos serviços
 
-> ❗ Java não foi utilizado, conforme restrições do enunciado.
-
 ---
 
-## 📐 Arquitetura do Projeto
+## Arquitetura do Projeto
 
 ```
 Cliente TCP ───────┐
@@ -63,7 +53,7 @@ Cada protocolo é implementado como um **serviço independente**, mas todos são
 
 ---
 
-## 📂 Estrutura de Pastas
+## Estrutura de Pastas
 
 ```
 projeto/
@@ -88,7 +78,7 @@ projeto/
 
 ---
 
-## ▶️ Como Executar o Projeto
+##  Como Executar o Projeto
 
 ### Pré-requisitos
 
@@ -126,7 +116,7 @@ Esse comando inicializa **simultaneamente**:
 
 ---
 
-## 🧪 Testes
+## Testes
 
 ### Teste TCP
 
@@ -150,17 +140,6 @@ As respostas podem ser observadas diretamente no terminal dos servidores.
 
 ---
 
-## ✅ Requisitos
-
-* ✔ Uso real de TCP e UDP (sockets puros)
-* ✔ Nenhuma abstração proibida (HTTP, WebSocket, RTSP, etc.)
-* ✔ TCP e UDP no mesmo projeto
-* ✔ gRPC utilizado exclusivamente para RPC
-* ✔ Duas linguagens diferentes no gRPC (Node.js ↔ Python)
-* ✔ Arquitetura demonstrável
-* ✔ Execução presencial e testável
-
----
 
 
 
