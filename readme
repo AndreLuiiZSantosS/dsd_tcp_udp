@@ -1,0 +1,167 @@
+# Projeto de Estudo – TCP, UDP e gRPC
+
+Este projeto foi desenvolvido como **estudo de caso acadêmico** para demonstrar, de forma prática, o uso de **protocolos de comunicação distintos** em um mesmo sistema: **TCP, UDP e gRPC**, atendendo rigorosamente aos requisitos propostos nas atividades.
+
+O foco não é interface gráfica ou experiência do usuário, mas sim **comunicação entre processos**, **arquitetura de rede** e **uso direto dos protocolos**, sem abstrações proibidas.
+
+---
+
+## 🎯 Objetivo
+
+Demonstrar:
+
+* Comunicação via **TCP puro**
+* Comunicação via **UDP puro**
+* Comunicação via **gRPC** entre **duas linguagens diferentes**
+* Execução conjunta dos serviços em um único projeto
+* Possibilidade de teste e demonstração presencial
+
+---
+
+## 🧪 Estudo de Caso
+
+Sistema simples de comunicação entre usuários, explorando diferentes modelos de transmissão de dados:
+
+* **TCP**: envio confiável de mensagens
+* **UDP**: envio de mensagens sem garantia de entrega
+* **gRPC**: gerenciamento de usuários (login e listagem) com comunicação estruturada
+
+O estudo se enquadra nos exemplos sugeridos pelo enunciado, como:
+
+* transmissão de dados
+* sistemas simples de gerenciamento de contas
+
+---
+
+## 🧠 Tecnologias Utilizadas
+
+* **Node.js** – servidores TCP e UDP
+* **Python** – servidor gRPC
+* **gRPC + Protocol Buffers** – comunicação estruturada
+* **concurrently** – orquestração dos serviços
+
+> ❗ Java não foi utilizado, conforme restrições do enunciado.
+
+---
+
+## 📐 Arquitetura do Projeto
+
+```
+Cliente TCP ───────┐
+                    │
+Cliente UDP ────────┼──► Servidores Node.js
+                    │      • TCP (porta 9000)
+                    │      • UDP (porta 9001)
+Cliente gRPC ───────┘
+        │
+        ▼
+Servidor gRPC (Python)
+porta 6000
+```
+
+Cada protocolo é implementado como um **serviço independente**, mas todos são executados de forma unificada.
+
+---
+
+## 📂 Estrutura de Pastas
+
+```
+projeto/
+│
+├── tcp_udp/
+│   ├── tcp_server.js
+│   ├── tcp_client.js
+│   ├── udp_server.js
+│   └── udp_client.js
+│
+├── grpc/
+│   ├── proto/
+│   │   └── chat.proto
+│   ├── server_python/
+│   │   └── server.py
+│   └── client_node/
+│       └── client.js
+│
+├── package.json
+└── README.md
+```
+
+---
+
+## ▶️ Como Executar o Projeto
+
+### Pré-requisitos
+
+* Node.js instalado
+* Python 3 instalado
+* pip com os pacotes:
+
+  ```bash
+  pip install grpcio grpcio-tools
+  ```
+
+---
+
+### Instalação
+
+Na raiz do projeto:
+
+```bash
+npm install
+```
+
+---
+
+### Execução unificada
+
+```bash
+npm start
+```
+
+Esse comando inicializa **simultaneamente**:
+
+* Servidor TCP (porta 9000)
+* Servidor UDP (porta 9001)
+* Servidor gRPC Python (porta 6000)
+
+---
+
+## 🧪 Testes
+
+### Teste TCP
+
+```bash
+node tcp_udp/tcp_client.js
+```
+
+### Teste UDP
+
+```bash
+node tcp_udp/udp_client.js
+```
+
+### Teste gRPC
+
+```bash
+node grpc/client_node/client.js
+```
+
+As respostas podem ser observadas diretamente no terminal dos servidores.
+
+---
+
+## ✅ Requisitos
+
+* ✔ Uso real de TCP e UDP (sockets puros)
+* ✔ Nenhuma abstração proibida (HTTP, WebSocket, RTSP, etc.)
+* ✔ TCP e UDP no mesmo projeto
+* ✔ gRPC utilizado exclusivamente para RPC
+* ✔ Duas linguagens diferentes no gRPC (Node.js ↔ Python)
+* ✔ Arquitetura demonstrável
+* ✔ Execução presencial e testável
+
+---
+
+
+
+

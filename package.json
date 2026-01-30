@@ -1,0 +1,16 @@
+{
+  "name": "nova-pasta-(2)",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"node tcp_udp/tcp_server.js\" \"node tcp_udp/udp_server.js\" \"python -u grpc/server_python/server.py\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
