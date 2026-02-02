@@ -1,146 +1,51 @@
-# Projeto de Estudo – TCP, UDP e gRPC
+#  Arena TCP/UDP - Multiplayer Real-time Game
 
-Este projeto foi desenvolvido como **estudo de caso acadêmico** para demonstrar, de forma prática, o uso de **protocolos de comunicação distintos** em um mesmo sistema: **TCP, UDP e gRPC**, atendendo rigorosamente aos requisitos propostos nas atividades.
+> **Projeto Acadêmico:** Estudo de caso sobre a implementação híbrida de protocolos de transporte.
 
-O foco não é interface gráfica ou experiência do usuário, mas sim **comunicação entre processos**, **arquitetura de rede** e **uso direto dos protocolos**, sem abstrações proibidas.
-
----
-
-## Objetivo
-
-Demonstrar:
-
-* Comunicação via **TCP **
-* Comunicação via **UDP **
-* Comunicação via **gRPC** entre **duas linguagens diferentes**
+Este projeto é um jogo multiplayer massivo (estilo *Agar.io*) desenvolvido em **Python** utilizando **Sockets Puros**. O objetivo é demonstrar a aplicação prática e simultânea dos protocolos **TCP** e **UDP** em um único sistema distribuído.
 
 ---
 
-##  Estudo de Caso
+##  Arquitetura do Projeto e Protocolos Utilizados
 
-Sistema simples de comunicação entre usuários, explorando diferentes modelos de transmissão de dados:
+A aplicação utiliza uma arquitetura Cliente-Servidor híbrida para otimizar a experiência do usuário, dividindo o tráfego de rede em dois canais distintos:
 
-* **TCP**: envio confiável de mensagens
-* **UDP**: envio de mensagens sem garantia de entrega
-* **gRPC**: gerenciamento de usuários e mensagens via chamadas remotas
+### 1. Canal de Controle e Integridade (TCP - Porta 3000)
+Utilizamos o protocolo **TCP (Transmission Control Protocol)** para dados que exigem confiabilidade total e ordem de entrega garantida. A perda de um único bit aqui quebraria a lógica do jogo.
 
+* **Chat em Tempo Real:** Garantia de que mensagens de texto cheguem completas.
+* **Gestão de Entidades (Comidas):** Sincronização do nascimento e remoção de "comidas". (Evita que um jogador coma algo que já não existe).
+* **Eventos Críticos (PvP):** Comandos de `KILL` (Morte) e `WIN` (Vitória). O servidor atua como juiz incontestável via TCP.
+* **Ciclo de Vida:** Login (Handshake) e Logout dos jogadores.
 
-## Tecnologias Utilizadas
+### 2. Canal de Telemetria e Movimento (UDP - Porta 3001)
+Utilizamos o protocolo **UDP (User Datagram Protocol)** para dados de alta frequência onde a baixa latência é prioritária em relação à confiabilidade.
 
-* **Node.js** – servidores TCP e UDP
-* **Python** – servidor gRPC
-* **gRPC + Protocol Buffers** – comunicação estruturada
-* **concurrently** – orquestração dos serviços
-
----
-
-## Arquitetura do Projeto
-
-```
-Cliente TCP ───────┐
-                    │
-Cliente UDP ────────┼──► Servidores Node.js
-                    │      • TCP (porta 9000)
-                    │      • UDP (porta 9001)
-Cliente gRPC ───────┘
-        │
-        ▼
-Servidor gRPC (Python)
-porta 6000
-```
-
-Cada protocolo é implementado como um **serviço independente**, mas todos são executados de forma unificada.
+* **Movimentação:** Coordenadas `(X, Y)`, Tamanho e Cor são enviados 30 vezes por segundo.
+* **Por que UDP?** Se um pacote de movimento se perder na rede, não há necessidade de reenvio (o que causaria "lag"). O próximo pacote, milissegundos depois, atualizará a posição mais recente, garantindo fluidez visual.
 
 ---
 
-## Estrutura de Pastas
+##  Funcionalidades
 
-```
-projeto/
-│
-├── tcp_udp/
-│   ├── tcp_server.js
-│   ├── tcp_client.js
-│   ├── udp_server.js
-│   └── udp_client.js
-│
-├── grpc/
-│   ├── proto/
-│   │   └── chat.proto
-│   ├── server_python/
-│   │   └── server.py
-│   └── client_node/
-│       └── client.js
-│
-├── package.json
-└── README.md
-```
+* **Multiplayer em LAN:** Suporte para múltiplos jogadores na mesma rede local.
+* **Gameplay:** Controle uma célula, coma para crescer.
+* **Sistema PvP:** Jogadores maiores podem devorar jogadores menores (resetando o perdedor).
+* **Condição de Vitória:** O primeiro a atingir a meta de tamanho vence a rodada para todos.
+* **Chat Integrado:** Converse com outros jogadores na mesma janela.
+* **Visual Imersivo:** Modo Tela Cheia, tema escuro e grade de referência.
 
 ---
 
-##  Como Executar o Projeto
+##  Como Rodar o Projeto
 
 ### Pré-requisitos
+* **Python 3.x** instalado.
+* Bibliotecas nativas (não é necessário `pip install` nada extra):
+    * `socket`, `threading`, `tkinter`, `random`.
 
-* Node.js instalado
-* Python 3 instalado
-* pip com os pacotes:
-
-  ```bash
-  pip install grpcio grpcio-tools
-  ```
-
----
-
-### Instalação
-
-Na raiz do projeto:
+### Passo 1: O Servidor (Host)
+Escolha um computador para ser o servidor. Execute o arquivo:
 
 ```bash
-npm install
-```
-
----
-
-### Execução unificada
-
-```bash
-npm start
-```
-
-Esse comando inicializa **simultaneamente**:
-
-* Servidor TCP (porta 9000)
-* Servidor UDP (porta 9001)
-* Servidor gRPC Python (porta 6000)
-
----
-
-## Testes
-
-### Teste TCP
-
-```bash
-node tcp_udp/tcp_client.js
-```
-
-### Teste UDP
-
-```bash
-node tcp_udp/udp_client.js
-```
-
-### Teste gRPC
-
-```bash
-node grpc/client_node/client.js
-```
-
-As respostas podem ser observadas diretamente no terminal dos servidores.
-
----
-
-
-
-
-
+python server.py
