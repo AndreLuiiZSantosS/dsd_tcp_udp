@@ -2,7 +2,7 @@
 
 > **Projeto Acadêmico:** Estudo de caso sobre a implementação híbrida de protocolos de transporte.
 
-Este projeto é um jogo multiplayer massivo (estilo *Agar.io*) desenvolvido em **Python** utilizando **Sockets Puros**. O objetivo é demonstrar a aplicação prática e simultânea dos protocolos **TCP** e **UDP** em um único sistema distribuído.
+Este projeto é um jogo multiplayer (estilo *Agar.io*) desenvolvido em **Python** utilizando **Sockets Puros** para a disciplina de **sistemas distribuídos**. O objetivo é demonstrar a aplicação prática e simultânea dos protocolos **TCP** e **UDP** em um único sistema distribuído.
 
 ---
 
@@ -22,7 +22,6 @@ Utilizamos o protocolo **TCP (Transmission Control Protocol)** para dados que ex
 Utilizamos o protocolo **UDP (User Datagram Protocol)** para dados de alta frequência onde a baixa latência é prioritária em relação à confiabilidade.
 
 * **Movimentação:** Coordenadas `(X, Y)`, Tamanho e Cor são enviados 30 vezes por segundo.
-* **Por que UDP?** Se um pacote de movimento se perder na rede, não há necessidade de reenvio (o que causaria "lag"). O próximo pacote, milissegundos depois, atualizará a posição mais recente, garantindo fluidez visual.
 
 ---
 
@@ -33,7 +32,6 @@ Utilizamos o protocolo **UDP (User Datagram Protocol)** para dados de alta frequ
 * **Sistema PvP:** Jogadores maiores podem devorar jogadores menores (resetando o perdedor).
 * **Condição de Vitória:** O primeiro a atingir a meta de tamanho vence a rodada para todos.
 * **Chat Integrado:** Converse com outros jogadores na mesma janela.
-* **Visual Imersivo:** Modo Tela Cheia, tema escuro e grade de referência.
 
 ---
 
